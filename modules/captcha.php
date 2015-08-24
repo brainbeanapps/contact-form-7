@@ -194,9 +194,7 @@ function wpcf7_captcha_messages( $messages ) {
 
 /* Tag generator */
 
-if ( is_admin() ) {
-	add_action( 'admin_init', 'wpcf7_add_tag_generator_captcha', 46 );
-}
+add_action( 'wpcf7_admin_init', 'wpcf7_add_tag_generator_captcha', 46 );
 
 function wpcf7_add_tag_generator_captcha() {
 	if ( ! wpcf7_use_really_simple_captcha() ) {
