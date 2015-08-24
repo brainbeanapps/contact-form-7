@@ -195,7 +195,7 @@ function wpcf7_captcha_messages( $messages ) {
 /* Tag generator */
 
 if ( is_admin() ) {
-	add_action( 'admin_init', 'wpcf7_add_tag_generator_captcha', 45 );
+	add_action( 'admin_init', 'wpcf7_add_tag_generator_captcha', 46 );
 }
 
 function wpcf7_add_tag_generator_captcha() {
@@ -204,7 +204,8 @@ function wpcf7_add_tag_generator_captcha() {
 	}
 
 	$tag_generator = WPCF7_TagGenerator::get_instance();
-	$tag_generator->add( 'captcha', __( 'CAPTCHA', 'contact-form-7' ),
+	$tag_generator->add( 'captcha',
+		__( 'CAPTCHA (Really Simple CAPTCHA)', 'contact-form-7' ),
 		'wpcf7_tag_generator_captcha' );
 }
 
