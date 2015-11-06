@@ -319,6 +319,7 @@ function wpcf7_recaptcha_shortcode_handler( $tag ) {
 	$html = sprintf( '<div %1$s></div>', wpcf7_format_atts( $atts ) );
 	$html .= wpcf7_recaptcha_noscript(
 		array( 'sitekey' => $atts['data-sitekey'] ) );
+	$html = sprintf( '<div class="wpcf7-form-control-wrap">%s</div>', $html );
 
 	return $html;
 }
