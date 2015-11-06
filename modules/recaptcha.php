@@ -380,8 +380,7 @@ function wpcf7_recaptcha_check_with_google( $spam ) {
 		return $spam;
 	}
 
-	$response_token = isset( $_POST['g-recaptcha-response'] )
-		? $_POST['g-recaptcha-response'] : '';
+	$response_token = wpcf7_recaptcha_response();
 	$spam = ! $recaptcha->verify( $response_token );
 
 	return $spam;
@@ -470,4 +469,12 @@ function wpcf7_tag_generator_recaptcha( $contact_form, $args = '' ) {
 	</div>
 </div>
 <?php
+}
+
+function wpcf7_recaptcha_response() {
+	if ( isset( $_POST['g-recaptcha-response'] ) ) {
+		return $_POST['g-recaptcha-response'];
+	}
+
+	return false;
 }
