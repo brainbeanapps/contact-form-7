@@ -166,13 +166,17 @@ function wpcf7_enqueue_scripts() {
 
 	$_wpcf7 = array(
 		'loaderUrl' => wpcf7_ajax_loader(),
+		'recaptchaEmpty' =>
+			__( 'Please verify that you are not a robot.', 'contact-form-7' ),
 		'sending' => __( 'Sending ...', 'contact-form-7' ) );
 
-	if ( defined( 'WP_CACHE' ) && WP_CACHE )
+	if ( defined( 'WP_CACHE' ) && WP_CACHE ) {
 		$_wpcf7['cached'] = 1;
+	}
 
-	if ( wpcf7_support_html5_fallback() )
+	if ( wpcf7_support_html5_fallback() ) {
 		$_wpcf7['jqueryUi'] = 1;
+	}
 
 	wp_localize_script( 'contact-form-7', '_wpcf7', $_wpcf7 );
 
