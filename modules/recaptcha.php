@@ -34,12 +34,6 @@ class WPCF7_RECAPTCHA extends WPCF7_Service {
 	}
 
 	public function icon() {
-		$icon = sprintf(
-			'<img src="%1$s" alt="%2$s" width="%3$d" height="%4$d" class="icon" />',
-			wpcf7_plugin_url( 'images/service-icons/recaptcha-72x72.png' ),
-			esc_attr( __( 'reCAPTCHA Logo', 'contact-form-7' ) ),
-			36, 36 );
-		echo $icon;
 	}
 
 	public function link() {
