@@ -37,22 +37,22 @@ Jason Hendriks - Postman is a next-generation SMTP Mailer, software that assists
 * Afrikaans (af) - Schalk Burger
 * Albanian (sq) - Olgi Zenullari
 * Arabic (ar) - Tarek Chaaban, Muhammed Lardi, Yaser Maadan
-* Armenian (hy_AM) - Emmanuelle Traduction
+* Armenian (hy) - Emmanuelle Traduction
 * Azerbaijani (az) - Zaur Bayramov
 * Bangla (bn_BD) - SM Mehdi Akram
 * Basque (Euskara; eu) - karrikas
-* Belarusian (be_BY) - Igor Dubilei
+* Belarusian (bel) - Igor Dubilei
 * Bosnian (bs_BA) - Vedran
 * Bulgarian (bg_BG) - Iliyan Darganov
 * Catalan (ca) - Jordi Sancho, Robert Buj, Jaume Aragay Badia, luba lee
-* Central Kurdish (ckb) - Mahr Hassan
+* Kurdish (Sorani; ckb) - Mahr Hassan
 * Chinese (China; zh_CN) - Soz, Keefe Dunn, Stella Hu
 * Chinese (Taiwan; zh_TW) - James Wu
 * Croatian (hr) - tolingo Translation Services, Marko Puskaric, Sanjin Barac
 * Czech (cs_CZ) - Korry, Radovan Fiser, Tomas Vesely, Pavel Bilek, Vladislav Šenk
 * Danish (da_DK) - Jens Griebel, Georg S. Adamsen, Thomas Blomberg Hansen
 * Dutch (nl_NL) - Chris Devriese, Martin Hein, Rene, TenSheep, Tim de Hoog, Henk Buma
-* Esperanto (eo_EO) - Arkadiusz Zychewicz
+* Esperanto (eo) - Arkadiusz Zychewicz
 * Estonian (et) - Peeter Rahuvarm, Egon Elbre, Tanel Jüris
 * Finnish (fi) - Miika Turunen, Mediajalostamo, Jani Alha
 * French (fr_FR) - Jillij, Oncle Tom, Maître Mô, Emmanuel Simond, Hédi Sellami
@@ -60,14 +60,14 @@ Jason Hendriks - Postman is a next-generation SMTP Mailer, software that assists
 * Georgian (ka_GE) - Nodar Rocko Davituri
 * German (de_DE) - Marcel Spitau, Ivan Graf
 * Greek (el) - Nick Mouratidis, Pr. friedlich, John D. Dimoferlias
-* Gujarati (gu_IN) - Apoto
+* Gujarati (gu) - Apoto
 * Haitian (ht) - Lam Tu Do
 * Hebrew (he_IL) - Yaron Ofer, Arik Galansky, Ahrale
 * Hindi (hi_IN) - Tarun Joshi, Ashish
 * Hungarian (hu_HU) - Andras Hirschler, János Csárdi-Braunstein, Farkas Győző
 * Indian Bengali (bn_IN) - Suman Manna
 * Indonesian (Bahasa Indonesia; id_ID) - Hendry Lee, Belajar Seo Indonesia
-* Irish (ga_IE) - Vikas Arora
+* Irish (ga) - Vikas Arora
 * Italian (it_IT) - Bruno, Gianni Diurno
 * Japanese (ja) - Takayuki Miyoshi
 * Korean (ko_KR) - Seong Eun Lee, Jong-In Kim, martian36
@@ -88,11 +88,11 @@ Jason Hendriks - Postman is a next-generation SMTP Mailer, software that assists
 * Serbian (sr_RS) - Vedran, Aleksandar Urošević
 * Sinhala (si_LK) - Nitin Aggarwal
 * Slovak (sk_SK) - Patrik Bóna, WordPress Slovakia
-* Slovene (sl_SI) - Mihael Simonič, Jani Roskar, Marko Ambrožič
+* Slovenian (sl_SI) - Mihael Simonič, Jani Roskar, Marko Ambrožič
 * Spanish (es_ES) - Jordi Sancho, Vladimir Prieto, Federico Mikaelian, Matias Baldanza, Carlos Agnese, Lourdes Cuesta, Carlos Oropesa, Ana Ayelén Martínez
 * Swedish (sv_SE) - Fredrik Jonsson, the Swedish community
 * Tagalog (tl) - Rupert Agnew Lanuza, Hanne, Language Connect
-* Tamil (ta) - Nitin Aggarwal
+* Tamil (ta_IN) - Nitin Aggarwal
 * Thai (th) - ToshiK, kazama, TG Knowledge
 * Turkish (tr_TR) - Roman Neumuller, Hasan Yılmaz, Emin Buğra Saral, Burak Yavuz
 * Ukrainian (uk) - Andrey Kovba, Ukrainian WordPress localization team, Myroslava Pabyrivska
