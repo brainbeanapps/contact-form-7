@@ -153,9 +153,9 @@ function wpcf7_load_contact_form_admin() {
 
 	$post = null;
 
-	if ( 'wpcf7-new' == $plugin_page && isset( $_GET['locale'] ) ) {
+	if ( 'wpcf7-new' == $plugin_page ) {
 		$post = WPCF7_ContactForm::get_template( array(
-			'locale' => $_GET['locale'] ) );
+			'locale' => isset( $_GET['locale'] ) ? $_GET['locale'] : null ) );
 	} elseif ( ! empty( $_GET['post'] ) ) {
 		$post = WPCF7_ContactForm::get_instance( $_GET['post'] );
 	}
@@ -166,10 +166,6 @@ function wpcf7_load_contact_form_admin() {
 
 	if ( $post && current_user_can( 'wpcf7_edit_contact_form', $post->id() ) ) {
 		$help_tabs->set_help_tabs( 'edit' );
-
-	} else if ( 'wpcf7-new' == $plugin_page ) {
-		$help_tabs->set_help_tabs( 'add_new' );
-
 	} else {
 		$help_tabs->set_help_tabs( 'list' );
 
@@ -262,45 +258,16 @@ function wpcf7_admin_management_page() {
 }
 
 function wpcf7_admin_add_new_page() {
-	if ( $post = wpcf7_get_current_contact_form() ) {
-		$post_id = -1;
+	$post = wpcf7_get_current_contact_form();
 
-		require_once WPCF7_PLUGIN_DIR . '/admin/includes/editor.php';
-		require_once WPCF7_PLUGIN_DIR . '/admin/edit-contact-form.php';
-		return;
+	if ( ! $post ) {
+		$post = WPCF7_ContactForm::get_template();
 	}
 
-	$available_locales = wpcf7_l10n();
-	$default_locale = get_locale();
+	$post_id = -1;
 
-	if ( ! isset( $available_locales[$default_locale] ) ) {
-		$default_locale = 'en_US';
-	}
-
-?>
-<div class="wrap">
-
-<h2><?php echo esc_html( __( 'Add New Contact Form', 'contact-form-7' ) ); ?></h2>
-
-<?php do_action( 'wpcf7_admin_notices' ); ?>
-
-<h3><?php echo esc_html( sprintf( __( 'Use the default language (%s)', 'contact-form-7' ), $available_locales[$default_locale] ) ); ?></h3>
-<p><a href="<?php echo esc_url( add_query_arg( array( 'locale' => $default_locale ), menu_page_url( 'wpcf7-new', false ) ) ); ?>" class="button button-primary" /><?php echo esc_html( __( 'Add New', 'contact-form-7' ) ); ?></a></p>
-
-<?php unset( $available_locales[$default_locale] ); ?>
-<h3><?php echo esc_html( __( 'Or', 'contact-form-7' ) ); ?></h3>
-<form action="" method="get">
-<input type="hidden" name="page" value="wpcf7-new" />
-<select name="locale">
-<option value="" selected="selected"><?php echo esc_html( __( '(select language)', 'contact-form-7' ) ); ?></option>
-<?php foreach ( $available_locales as $code => $locale ) : ?>
-<option value="<?php echo esc_attr( $code ); ?>"><?php echo esc_html( $locale ); ?></option>
-<?php endforeach; ?>
-</select>
-<input type="submit" class="button" value="<?php echo esc_attr( __( 'Add New', 'contact-form-7' ) ); ?>" />
-</form>
-</div>
-<?php
+	require_once WPCF7_PLUGIN_DIR . '/admin/includes/editor.php';
+	require_once WPCF7_PLUGIN_DIR . '/admin/edit-contact-form.php';
 }
 
 function wpcf7_load_integration_page() {
