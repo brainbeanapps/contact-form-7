@@ -13,10 +13,15 @@ function wpcf7_admin_init() {
 add_action( 'admin_menu', 'wpcf7_admin_menu', 9 );
 
 function wpcf7_admin_menu() {
-	add_object_page( __( 'Contact Form 7', 'contact-form-7' ),
+	global $_wp_last_object_menu;
+
+	$_wp_last_object_menu++;
+
+	add_menu_page( __( 'Contact Form 7', 'contact-form-7' ),
 		__( 'Contact', 'contact-form-7' ),
 		'wpcf7_read_contact_forms', 'wpcf7',
-		'wpcf7_admin_management_page', 'dashicons-email' );
+		'wpcf7_admin_management_page', 'dashicons-email',
+		$_wp_last_object_menu );
 
 	$edit = add_submenu_page( 'wpcf7',
 		__( 'Edit Contact Form', 'contact-form-7' ),
