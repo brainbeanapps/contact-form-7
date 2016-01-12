@@ -42,7 +42,7 @@ class WPCF7_Editor {
 
 function wpcf7_editor_panel_form( $post ) {
 ?>
-<h3><?php echo esc_html( __( 'Form', 'contact-form-7' ) ); ?></h3>
+<h2><?php echo esc_html( __( 'Form', 'contact-form-7' ) ); ?></h2>
 
 <?php
 	$tag_generator = WPCF7_TagGenerator::get_instance();
@@ -81,7 +81,7 @@ function wpcf7_editor_box_mail( $post, $args = '' ) {
 
 ?>
 <div class="contact-form-editor-box-mail" id="<?php echo $id; ?>">
-<h3><?php echo esc_html( $args['title'] ); ?></h3>
+<h2><?php echo esc_html( $args['title'] ); ?></h2>
 
 <?php
 	if ( ! empty( $args['use'] ) ) :
@@ -169,7 +169,7 @@ function wpcf7_editor_panel_messages( $post ) {
 	}
 
 ?>
-<h3><?php echo esc_html( __( 'Messages', 'contact-form-7' ) ); ?></h3>
+<h2><?php echo esc_html( __( 'Messages', 'contact-form-7' ) ); ?></h2>
 <fieldset>
 <legend><?php echo esc_html( __( 'Edit messages used in the following situations.', 'contact-form-7' ) ); ?></legend>
 <?php
@@ -197,7 +197,7 @@ function wpcf7_editor_panel_additional_settings( $post ) {
 	$description = sprintf( esc_html( $description ), $desc_link );
 
 ?>
-<h3><?php echo esc_html( __( 'Additional Settings', 'contact-form-7' ) ); ?></h3>
+<h2><?php echo esc_html( __( 'Additional Settings', 'contact-form-7' ) ); ?></h2>
 <fieldset>
 <legend><?php echo $description; ?></legend>
 <textarea id="wpcf7-additional-settings" name="wpcf7-additional-settings" cols="100" rows="8" class="large-text"><?php echo esc_textarea( $post->prop( 'additional_settings' ) ); ?></textarea>

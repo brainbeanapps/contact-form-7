@@ -236,7 +236,7 @@ function wpcf7_admin_management_page() {
 ?>
 <div class="wrap">
 
-<h2><?php
+<h1><?php
 	echo esc_html( __( 'Contact Forms', 'contact-form-7' ) );
 
 	if ( current_user_can( 'wpcf7_edit_contact_forms' ) ) {
@@ -248,7 +248,7 @@ function wpcf7_admin_management_page() {
 			. __( 'Search results for &#8220;%s&#8221;', 'contact-form-7' )
 			. '</span>', esc_html( $_REQUEST['s'] ) );
 	}
-?></h2>
+?></h1>
 
 <?php do_action( 'wpcf7_admin_notices' ); ?>
 
@@ -294,7 +294,7 @@ function wpcf7_admin_integration_page() {
 ?>
 <div class="wrap">
 
-<h2><?php echo esc_html( __( 'Integration with Other Services', 'contact-form-7' ) ); ?></h2>
+<h1><?php echo esc_html( __( 'Integration with Other Services', 'contact-form-7' ) ); ?></h1>
 
 <?php do_action( 'wpcf7_admin_notices' ); ?>
 
@@ -391,13 +391,13 @@ function wpcf7_welcome_panel() {
 	<div class="welcome-panel-content">
 		<div class="welcome-panel-column-container">
 			<div class="welcome-panel-column">
-				<h4><?php echo esc_html( __( 'Contact Form 7 Needs Your Support', 'contact-form-7' ) ); ?></h4>
+				<h3><?php echo esc_html( __( 'Contact Form 7 Needs Your Support', 'contact-form-7' ) ); ?></h3>
 				<p class="message"><?php echo esc_html( __( "It is hard to continue development and support for this plugin without contributions from users like you. If you enjoy using Contact Form 7 and find it useful, please consider making a donation.", 'contact-form-7' ) ); ?></p>
 				<p><?php echo wpcf7_link( __( 'http://contactform7.com/donate/', 'contact-form-7' ), __( 'Donate', 'contact-form-7' ), array( 'class' => 'button button-primary' ) ); ?></p>
 			</div>
 
 			<div class="welcome-panel-column">
-				<h4><?php echo esc_html( __( 'Get Started', 'contact-form-7' ) ); ?></h4>
+				<h3><?php echo esc_html( __( 'Get Started', 'contact-form-7' ) ); ?></h3>
 				<ul>
 					<li><?php echo wpcf7_link( __( 'http://contactform7.com/getting-started-with-contact-form-7/', 'contact-form-7' ), __( 'Getting Started with Contact Form 7', 'contact-form-7' ) ); ?></li>
 					<li><?php echo wpcf7_link( __( 'http://contactform7.com/admin-screen/', 'contact-form-7' ), __( 'Admin Screen', 'contact-form-7' ) ); ?></li>
@@ -407,7 +407,7 @@ function wpcf7_welcome_panel() {
 			</div>
 
 			<div class="welcome-panel-column">
-				<h4><?php echo esc_html( __( 'Did You Know?', 'contact-form-7' ) ); ?></h4>
+				<h3><?php echo esc_html( __( 'Did You Know?', 'contact-form-7' ) ); ?></h3>
 				<ul>
 					<li><?php echo wpcf7_link( __( 'http://contactform7.com/spam-filtering-with-akismet/', 'contact-form-7' ), __( 'Spam Filtering with Akismet', 'contact-form-7' ) ); ?></li>
 					<li><?php echo wpcf7_link( __( 'http://contactform7.com/save-submitted-messages-with-flamingo/', 'contact-form-7' ), __( 'Save Messages with Flamingo', 'contact-form-7' ) ); ?></li>

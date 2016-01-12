@@ -31,7 +31,7 @@ function wpcf7_admin_save_button( $post_id ) {
 
 ?><div class="wrap">
 
-<h2><?php
+<h1><?php
 	if ( $post->initial() ) {
 		echo esc_html( __( 'Add New Contact Form', 'contact-form-7' ) );
 	} else {
@@ -41,7 +41,7 @@ function wpcf7_admin_save_button( $post_id ) {
 			echo ' <a href="' . esc_url( menu_page_url( 'wpcf7-new', false ) ) . '" class="add-new-h2">' . esc_html( __( 'Add New', 'contact-form-7' ) ) . '</a>';
 		}
 	}
-?></h2>
+?></h1>
 
 <?php do_action( 'wpcf7_admin_notices' ); ?>
 
@@ -114,7 +114,7 @@ if ( $post ) :
 <div id="postbox-container-1" class="postbox-container">
 <?php if ( current_user_can( 'wpcf7_edit_contact_form', $post_id ) ) : ?>
 <div id="submitdiv" class="postbox">
-<h3><?php echo esc_html( __( 'Status', 'contact-form-7' ) ); ?></h3>
+<h2><?php echo esc_html( __( 'Status', 'contact-form-7' ) ); ?></h2>
 <div class="inside">
 <div class="submitbox" id="submitpost">
 
@@ -155,7 +155,7 @@ if ( $post ) :
 <?php endif; ?>
 
 <div id="informationdiv" class="postbox">
-<h3><?php echo esc_html( __( 'Information', 'contact-form-7' ) ); ?></h3>
+<h2><?php echo esc_html( __( 'Information', 'contact-form-7' ) ); ?></h2>
 <div class="inside">
 <ul>
 <li><?php echo wpcf7_link( __( 'http://contactform7.com/docs/', 'contact-form-7' ), __( 'Docs', 'contact-form-7' ) ); ?></li>

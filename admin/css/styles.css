@@ -43,7 +43,7 @@ span.shortcode > input {
 	outline: thin dotted;
 }
 
-.postbox-container .postbox h3 {
+.postbox-container .postbox h2 {
 	border-bottom: 1px solid transparent;
 }
 
@@ -103,7 +103,7 @@ span.shortcode > input {
 	color: #000;
 }
 
-#contact-form-editor .contact-form-editor-panel h3 {
+#contact-form-editor .contact-form-editor-panel h2 {
 	font-size: 18px;
 	font-weight: 400;
 	line-height: 24px;
@@ -304,7 +304,7 @@ span.shortcode > input {
 	margin: 8px 8px 8px -8px;
 }
 
-.card h3.title {
+.card h2.title {
 	float: left;
 	max-width: 240px;
 }
