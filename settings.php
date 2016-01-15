@@ -29,7 +29,6 @@ class WPCF7 {
 		self::load_module( 'date' );
 		self::load_module( 'file' );
 		self::load_module( 'flamingo' );
-		self::load_module( 'jetpack' );
 		self::load_module( 'listo' );
 		self::load_module( 'number' );
 		self::load_module( 'quiz' );
