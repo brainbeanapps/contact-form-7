@@ -72,6 +72,9 @@ class WPCF7_Mail {
 
 		if ( $use_html ) {
 			$headers .= "Content-Type: text/html\n";
+			$headers .= "X-WPCF7-Content-Type: text/html\n";
+		} else {
+			$headers .= "X-WPCF7-Content-Type: text/plain\n";
 		}
 
 		if ( $additional_headers ) {
@@ -163,6 +166,23 @@ function wpcf7_mail_replace_tags( $content, $args = '' ) {
 	$content = implode( "\n", $content );
 
 	return $content;
+}
+
+add_action( 'phpmailer_init', 'wpcf7_phpmailer_init' );
+
+function wpcf7_phpmailer_init( $phpmailer ) {
+	$wpcf7_content_type = false;
+
+	foreach ( (array) $phpmailer->getCustomHeaders() as $custom_header ) {
+		if ( 'X-WPCF7-Content-Type' == $custom_header[0] ) {
+			$wpcf7_content_type = trim( $custom_header[1] );
+			break;
+		}
+	}
+
+	if ( 'text/html' == $wpcf7_content_type ) {
+		$phpmailer->msgHTML( $phpmailer->Body );
+	}
 }
 
 class WPCF7_MailTaggedText {
