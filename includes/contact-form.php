@@ -654,6 +654,7 @@ class WPCF7_ContactForm {
 		$message = isset( $messages[$status] ) ? $messages[$status] : '';
 
 		if ( $filter ) {
+			$message = wp_strip_all_tags( $message );
 			$message = wpcf7_mail_replace_tags( $message, array( 'html' => true ) );
 			$message = apply_filters( 'wpcf7_display_message', $message, $status );
 		}
