@@ -1,5 +1,36 @@
 <?php
 
+function wpcf7_l10n() {
+	static $l10n = array();
+
+	if ( ! empty( $l10n ) ) {
+		return $l10n;
+	}
+
+	if ( ! is_admin() ) {
+		return $l10n;
+	}
+
+	require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
+
+	$api = translations_api( 'plugins', array(
+		'slug' => 'contact-form-7',
+		'version' => WPCF7_VERSION ) );
+
+	if ( is_wp_error( $api ) || empty( $api['translations'] ) ) {
+		return $l10n;
+	}
+
+	foreach ( (array) $api['translations'] as $translation ) {
+		if ( ! empty( $translation['language'] )
+		&& ! empty( $translation['english_name'] ) ) {
+			$l10n[$translation['language']] = $translation['english_name'];
+		}
+	}
+
+	return $l10n;
+}
+
 function wpcf7_is_valid_locale( $locale ) {
 	$pattern = '/^[a-z]{2,3}(?:_[a-zA-Z_]{2,})?$/';
 	return (bool) preg_match( $pattern, $locale );
