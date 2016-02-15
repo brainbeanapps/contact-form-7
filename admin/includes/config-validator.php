@@ -115,20 +115,74 @@ class WPCF7_ConfigValidator {
 		}
 	}
 
-	public function test_from_field_syntax( $value ) {
-		return false;
+	public function test_from_field_syntax( $content ) {
+		$content = trim( $content );
+
+		if ( preg_match( '/<(.+)>$/', $content, $matches ) ) {
+			$email = $matches[1];
+		} else {
+			$email = $content;
+		}
+
+		return wpcf7_is_email( $email );
 	}
 
-	public function test_email_in_site_domain( $value ) {
-		return false;
+	public function test_email_in_site_domain( $content ) {
+		if ( wpcf7_is_localhost() ) {
+			return true;
+		}
+
+		$site_domain = strtolower( $_SERVER['SERVER_NAME'] );
+
+		if ( substr( $site_domain, 0, 4 ) == 'www.' ) {
+			$site_domain = substr( $site_domain, 4 );
+		}
+
+		$content = trim( $content );
+
+		if ( preg_match( '/<(.+)>$/', $content, $matches ) ) {
+			$email = strtolower( $matches[1] );
+		} else {
+			$email = strtolower( $content );
+		}
+
+		return ( substr( $email, - strlen( $site_domain ) ) == $site_domain );
 	}
 
-	public function test_to_field_syntax( $value ) {
-		return false;
+	public function test_to_field_syntax( $content ) {
+		$tos = explode( ',', $content );
+
+		foreach ( $tos as $to ) {
+			$to = trim( $to );
+
+			if ( preg_match( '/<(.+)>$/', $to, $matches ) ) {
+				$to = $matches[1];
+			}
+
+			if ( ! wpcf7_is_email( $to ) ) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
-	public function test_additional_headers_syntax( $value ) {
-		return false;
+	public function test_additional_headers_syntax( $content ) {
+		$headers = explode( "\n", $content );
+
+		foreach ( $headers as $header ) {
+			$header = trim( $header );
+
+			if ( '' === $header ) {
+				continue;
+			}
+
+			if ( ! preg_match( '/^[0-9A-Za-z-]+:.+$/', $header ) ) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public function validate_messages() {
