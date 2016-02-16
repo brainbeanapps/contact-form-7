@@ -1,7 +1,7 @@
 <?php
 
 require_once WPCF7_PLUGIN_DIR . '/admin/includes/admin-functions.php';
-require_once WPCF7_PLUGIN_DIR . '/admin/includes/config-validator.php';
+require_once WPCF7_PLUGIN_DIR . '/includes/config-validator.php';
 require_once WPCF7_PLUGIN_DIR . '/admin/includes/help-tabs.php';
 require_once WPCF7_PLUGIN_DIR . '/admin/includes/tag-generator.php';
 
