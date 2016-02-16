@@ -813,6 +813,10 @@ class WPCF7_ContactForm {
 	}
 
 	public function validate_configuration() {
+		if ( $this->initial() ) {
+			return;
+		}
+
 		if ( ! class_exists( 'WPCF7_ConfigValidator' ) ) {
 			require_once WPCF7_PLUGIN_DIR . '/includes/config-validator.php';
 		}
@@ -820,6 +824,15 @@ class WPCF7_ContactForm {
 		$this->config_validator = new WPCF7_ConfigValidator( $this );
 		$this->config_validator->validate();
 	}
+
+	public function config_error( $section ) {
+		if ( ! $this->config_validator ) {
+			return false;
+		}
+
+		return $this->config_validator->get_error( $section );
+	}
+
 }
 
 function wpcf7_contact_form( $id ) {

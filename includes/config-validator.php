@@ -2,10 +2,10 @@
 
 class WPCF7_ConfigValidator {
 
-	const error_maybe_empty = 1;
-	const error_invalid_syntax = 2;
-	const error_email_not_in_site_domain = 3;
-	const error_html_in_message = 4;
+	const error_maybe_empty = 101;
+	const error_invalid_syntax = 102;
+	const error_email_not_in_site_domain = 103;
+	const error_html_in_message = 104;
 
 	private $contact_form;
 	private $errors = array();
@@ -36,6 +36,14 @@ class WPCF7_ConfigValidator {
 		}
 
 		return true;
+	}
+
+	public function get_error( $section ) {
+		if ( isset( $this->errors[$section] ) ) {
+			return $this->errors[$section];
+		}
+
+		return null;
 	}
 
 	private function add_error( $section, $error ) {
