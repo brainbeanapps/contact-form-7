@@ -13,7 +13,7 @@ class WPCF7_ConfigValidator {
 	public function __construct( WPCF7_ContactForm $contact_form ) {
 		$this->contact_form = $contact_form;
 		$this->errors = (array) get_post_meta(
-			$this->contact_form->id, '_config_errors', true );
+			$this->contact_form->id(), '_config_errors', true );
 	}
 
 	public function is_valid() {
@@ -27,10 +27,10 @@ class WPCF7_ConfigValidator {
 		$this->validate_mail( 'mail_2' );
 		$this->validate_messages();
 
-		delete_post_meta( $this->contact_form->id, '_config_errors' );
+		delete_post_meta( $this->contact_form->id(), '_config_errors' );
 
 		if ( $this->errors ) {
-			update_post_meta( $this->contact_form->id, '_config_errors',
+			update_post_meta( $this->contact_form->id(), '_config_errors',
 				$this->errors );
 			return false;
 		}
@@ -288,4 +288,11 @@ class WPCF7_ConfigValidator {
 
 		return $tag;
 	}
+}
+
+add_action( 'wpcf7_save_contact_form', 'wpcf7_validate_configuration' );
+
+function wpcf7_validate_configuration( $contact_form ) {
+	$validator = new WPCF7_ConfigValidator( $contact_form );
+	$validator->validate();
 }
