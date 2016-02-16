@@ -14,6 +14,7 @@ class WPCF7_ContactForm {
 	private $unit_tag;
 	private $responses_count = 0;
 	private $scanned_form_tags;
+	private $config_validator;
 
 	public static function count() {
 		return self::$found_items;
@@ -809,6 +810,15 @@ class WPCF7_ContactForm {
 		}
 
 		return apply_filters( 'wpcf7_contact_form_shortcode', $shortcode, $args, $this );
+	}
+
+	public function validate_configuration() {
+		if ( ! class_exists( 'WPCF7_ConfigValidator' ) ) {
+			require_once WPCF7_PLUGIN_DIR . '/includes/config-validator.php';
+		}
+
+		$this->config_validator = new WPCF7_ConfigValidator( $this );
+		$this->config_validator->validate();
 	}
 }
 

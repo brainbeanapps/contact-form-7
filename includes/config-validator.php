@@ -289,10 +289,3 @@ class WPCF7_ConfigValidator {
 		return $tag;
 	}
 }
-
-add_action( 'wpcf7_save_contact_form', 'wpcf7_validate_configuration' );
-
-function wpcf7_validate_configuration( $contact_form ) {
-	$validator = new WPCF7_ConfigValidator( $contact_form );
-	$validator->validate();
-}
