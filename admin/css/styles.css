@@ -39,6 +39,10 @@ span.shortcode > input {
 	color: #a00;
 }
 
+#submitpost input.delete:hover {
+	color: #f00;
+}
+
 #submitpost input.delete:focus {
 	outline: thin dotted;
 }
@@ -53,7 +57,7 @@ span.shortcode > input {
 }
 
 div.config-error, span.config-error {
-	color: #a00;
+	color: #d00;
 	font-style: normal;
 }
 
