@@ -168,6 +168,8 @@ function wpcf7_editor_panel_messages( $post ) {
 		unset( $messages['captcha_not_match'] );
 	}
 
+	$do_validate = wpcf7_validate_configuration();
+
 ?>
 <h2><?php echo esc_html( __( 'Messages', 'contact-form-7' ) ); ?></h2>
 <fieldset>
@@ -176,10 +178,19 @@ function wpcf7_editor_panel_messages( $post ) {
 
 	foreach ( $messages as $key => $arr ) {
 		$field_name = 'wpcf7-message-' . strtr( $key, '_', '-' );
+
+		$config_error = $do_validate
+			? $post->config_error( sprintf( 'messages.%s', $key ) ) : '';
+
 ?>
 <p class="description">
 <label for="<?php echo $field_name; ?>"><?php echo esc_html( $arr['description'] ); ?><br />
-<input type="text" id="<?php echo $field_name; ?>" name="<?php echo $field_name; ?>" class="large-text" size="70" value="<?php echo esc_attr( $post->message( $key, false ) ); ?>" />
+<input type="text" id="<?php echo $field_name; ?>" name="<?php echo $field_name; ?>" class="large-text" size="70" value="<?php echo esc_attr( $post->message( $key, false ) ); ?>"<?php echo $config_error ? ' aria-invalid="true"' : ''; ?> />
+<?php
+	if ( $config_error ) {
+		echo sprintf( '<br /><span role="alert" class="config-error dashicons-before dashicons-warning"> %s</span>', $config_error );
+	}
+?>
 </label>
 </p>
 <?php

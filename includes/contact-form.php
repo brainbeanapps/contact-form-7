@@ -814,14 +814,20 @@ class WPCF7_ContactForm {
 
 	public function validate_configuration() {
 		if ( ! $this->initial() ) {
-			$this->config_validator = new WPCF7_ConfigValidator( $this );
+			if ( ! $this->config_validator ) {
+				$this->config_validator = new WPCF7_ConfigValidator( $this );
+			}
+
 			$this->config_validator->validate();
 		}
 	}
 
 	public function get_config_errors() {
 		if ( ! $this->initial() ) {
-			$this->config_validator = new WPCF7_ConfigValidator( $this );
+			if ( ! $this->config_validator ) {
+				$this->config_validator = new WPCF7_ConfigValidator( $this );
+			}
+
 			return $this->config_validator->get_errors();
 		}
 
@@ -829,11 +835,15 @@ class WPCF7_ContactForm {
 	}
 
 	public function config_error( $section ) {
-		if ( ! $this->config_validator ) {
-			return false;
+		if ( ! $this->initial() ) {
+			if ( ! $this->config_validator ) {
+				$this->config_validator = new WPCF7_ConfigValidator( $this );
+			}
+
+			return $this->config_validator->get_error_message( $section );
 		}
 
-		return $this->config_validator->get_error( $section );
+		return '';
 	}
 
 }

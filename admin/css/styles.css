@@ -52,8 +52,9 @@ span.shortcode > input {
 	color: #23282d;
 }
 
-div.config-error {
+div.config-error, span.config-error {
 	color: #a00;
+	font-style: normal;
 }
 
 /*
@@ -255,6 +256,13 @@ div.config-error {
 
 .contact-form-editor-box-mail span.mailtag.used {
 	color: #666;
+}
+
+/*
+ * Messages Panel
+ */
+#messages-panel p.description {
+	margin: 5px 0 10px;
 }
 
 /*

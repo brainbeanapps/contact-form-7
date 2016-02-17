@@ -33,6 +33,23 @@ class WPCF7_ConfigValidator {
 		return null;
 	}
 
+	public function get_error_message( $section ) {
+		$code = $this->get_error( $section );
+
+		switch ( $code ) {
+			case self::error_maybe_empty:
+				return __( "This field can be empty depending on user input.", 'contact-form-7' );
+			case self::error_invalid_syntax:
+				return __( "This field has syntax errors.", 'contact-form-7' );
+			case self::error_email_not_in_site_domain:
+				return __( "This email address does not belong to the same domain as the site.", 'contact-form-7' );
+			case self::error_html_in_message:
+				return __( "HTML tags are not allowed in a message.", 'contact-form-7' );
+			default:
+				return '';
+		}
+	}
+
 	private function add_error( $section, $error ) {
 		$this->errors[$section] = $error;
 	}
