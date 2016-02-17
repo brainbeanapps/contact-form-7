@@ -59,6 +59,7 @@ span.shortcode > input {
 div.config-error, span.config-error {
 	color: #d00;
 	font-style: normal;
+	font-size: 13px;
 }
 
 /*
