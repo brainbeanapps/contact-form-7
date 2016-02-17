@@ -482,7 +482,7 @@ function wpcf7_notice_config_errors() {
 			number_format_i18n( count( $config_errors ) ) );
 
 		echo sprintf(
-			'<div class="notice notice-warning is-dismissible"><p>%s</p></div>',
+			'<div class="notice notice-error is-dismissible"><p>%s</p></div>',
 			esc_html( $message ) );
 	}
 }
