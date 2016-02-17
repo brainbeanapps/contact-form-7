@@ -109,7 +109,8 @@ class WPCF7_Contact_Form_List_Table extends WP_List_Table {
 
 		$output = sprintf( '<strong>%s</strong>', $output );
 
-		if ( $config_errors = $item->get_config_errors() ) {
+		if ( wpcf7_validate_configuration()
+		&& $config_errors = $item->get_config_errors() ) {
 			$error_notice = sprintf(
 				_n(
 					'%s configuration error found',
