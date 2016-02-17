@@ -472,7 +472,8 @@ function wpcf7_notice_config_errors() {
 		return;
 	}
 
-	if ( $config_errors = $contact_form->get_config_errors() ) {
+	if ( wpcf7_validate_configuration()
+	&& $config_errors = $contact_form->get_config_errors() ) {
 		$message = sprintf(
 			_n(
 				"This contact form has a configuration error.",

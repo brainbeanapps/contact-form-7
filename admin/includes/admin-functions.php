@@ -157,7 +157,9 @@ function wpcf7_save_contact_form( $post_id = -1 ) {
 
 	$post_id = $contact_form->save();
 
-	$contact_form->validate_configuration();
+	if ( wpcf7_validate_configuration() ) {
+		$contact_form->validate_configuration();
+	}
 
 	return $post_id;
 }
