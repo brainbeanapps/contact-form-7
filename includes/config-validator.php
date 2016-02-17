@@ -20,6 +20,22 @@ class WPCF7_ConfigValidator {
 		return ! $this->errors;
 	}
 
+	public function get_errors() {
+		return $this->errors;
+	}
+
+	public function get_error( $section ) {
+		if ( isset( $this->errors[$section] ) ) {
+			return $this->errors[$section];
+		}
+
+		return null;
+	}
+
+	private function add_error( $section, $error ) {
+		$this->errors[$section] = $error;
+	}
+
 	public function validate() {
 		$this->errors = array();
 
@@ -36,18 +52,6 @@ class WPCF7_ConfigValidator {
 		}
 
 		return true;
-	}
-
-	public function get_error( $section ) {
-		if ( isset( $this->errors[$section] ) ) {
-			return $this->errors[$section];
-		}
-
-		return null;
-	}
-
-	private function add_error( $section, $error ) {
-		$this->errors[$section] = $error;
 	}
 
 	public function validate_mail( $template = 'mail' ) {

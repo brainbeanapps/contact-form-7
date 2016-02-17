@@ -813,16 +813,19 @@ class WPCF7_ContactForm {
 	}
 
 	public function validate_configuration() {
-		if ( $this->initial() ) {
-			return;
+		if ( ! $this->initial() ) {
+			$this->config_validator = new WPCF7_ConfigValidator( $this );
+			$this->config_validator->validate();
+		}
+	}
+
+	public function get_config_errors() {
+		if ( ! $this->initial() ) {
+			$this->config_validator = new WPCF7_ConfigValidator( $this );
+			return $this->config_validator->get_errors();
 		}
 
-		if ( ! class_exists( 'WPCF7_ConfigValidator' ) ) {
-			require_once WPCF7_PLUGIN_DIR . '/includes/config-validator.php';
-		}
-
-		$this->config_validator = new WPCF7_ConfigValidator( $this );
-		$this->config_validator->validate();
+		return array();
 	}
 
 	public function config_error( $section ) {

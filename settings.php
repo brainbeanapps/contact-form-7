@@ -12,6 +12,7 @@ require_once WPCF7_PLUGIN_DIR . '/includes/mail.php';
 require_once WPCF7_PLUGIN_DIR . '/includes/submission.php';
 require_once WPCF7_PLUGIN_DIR . '/includes/upgrade.php';
 require_once WPCF7_PLUGIN_DIR . '/includes/integration.php';
+require_once WPCF7_PLUGIN_DIR . '/includes/config-validator.php';
 
 if ( is_admin() ) {
 	require_once WPCF7_PLUGIN_DIR . '/admin/admin.php';
