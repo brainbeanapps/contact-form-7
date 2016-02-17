@@ -14,6 +14,7 @@ class WPCF7_ConfigValidator {
 		$this->contact_form = $contact_form;
 		$this->errors = (array) get_post_meta(
 			$this->contact_form->id(), '_config_errors', true );
+		$this->errors = array_filter( $this->errors );
 	}
 
 	public function is_valid() {
