@@ -464,3 +464,24 @@ function wpcf7_not_allowed_to_edit() {
 		'<div class="notice notice-warning is-dismissible"><p>%s</p></div>',
 		esc_html( $message ) );
 }
+
+add_action( 'wpcf7_admin_notices', 'wpcf7_notice_config_errors' );
+
+function wpcf7_notice_config_errors() {
+	if ( ! $contact_form = wpcf7_get_current_contact_form() ) {
+		return;
+	}
+
+	if ( $config_errors = $contact_form->get_config_errors() ) {
+		$message = sprintf(
+			_n(
+				"This contact form has a configuration error.",
+				"This contact form has %s configuration errors.",
+				count( $config_errors ), 'contact-form-7' ),
+			number_format_i18n( count( $config_errors ) ) );
+
+		echo sprintf(
+			'<div class="notice notice-warning is-dismissible"><p>%s</p></div>',
+			esc_html( $message ) );
+	}
+}
