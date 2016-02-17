@@ -37,7 +37,9 @@ class WPCF7_ContactFormTemplate {
 
 	public static function mail() {
 		$template = array(
-			'subject' => sprintf( '%s "[your-subject]"', get_bloginfo( 'name' ) ),
+			'subject' => sprintf(
+				_x( '%1$s "%2$s"', 'mail subject', 'contact-form-7' ),
+				get_bloginfo( 'name' ), '[your-subject]' ),
 			'sender' => sprintf( '[your-name] <%s>', self::from_email() ),
 			'body' =>
 				sprintf( __( 'From: %s', 'contact-form-7' ),
@@ -61,7 +63,9 @@ class WPCF7_ContactFormTemplate {
 	public static function mail_2() {
 		$template = array(
 			'active' => false,
-			'subject' => sprintf( '%s "[your-subject]"', get_bloginfo( 'name' ) ),
+			'subject' => sprintf(
+				_x( '%1$s "%2$s"', 'mail subject', 'contact-form-7' ),
+				get_bloginfo( 'name' ), '[your-subject]' ),
 			'sender' => sprintf( '%s <%s>',
 				get_bloginfo( 'name' ), self::from_email() ),
 			'body' =>
