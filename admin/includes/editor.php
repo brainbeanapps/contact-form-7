@@ -108,7 +108,7 @@ function wpcf7_editor_box_mail( $post, $args = '' ) {
 			sprintf( '%s.recipient', $args['name'] ) ); ?>
 		<input type="text" id="<?php echo $id; ?>-recipient" name="<?php echo $id; ?>-recipient" class="large-text code" size="70" value="<?php echo esc_attr( $mail['recipient'] ); ?>"<?php if ( $do_validate && $config_error ) { echo ' aria-invalid="true"'; } ?> />
 		<?php if ( $do_validate && $config_error ) {
-			echo sprintf( '<br /><span role="alert" class="config-error dashicons-before dashicons-warning"> %s</span>', $config_error );
+			echo sprintf( '<br /><span role="alert" class="config-error">%s</span>', $config_error );
 		} ?>
 	</td>
 	</tr>
@@ -122,7 +122,7 @@ function wpcf7_editor_box_mail( $post, $args = '' ) {
 			sprintf( '%s.sender', $args['name'] ) ); ?>
 		<input type="text" id="<?php echo $id; ?>-sender" name="<?php echo $id; ?>-sender" class="large-text code" size="70" value="<?php echo esc_attr( $mail['sender'] ); ?>"<?php if ( $do_validate && $config_error ) { echo ' aria-invalid="true"'; } ?> />
 		<?php if ( $do_validate && $config_error ) {
-			echo sprintf( '<br /><span role="alert" class="config-error dashicons-before dashicons-warning"> %s</span>', $config_error );
+			echo sprintf( '<br /><span role="alert" class="config-error">%s</span>', $config_error );
 		} ?>
 	</td>
 	</tr>
@@ -136,7 +136,7 @@ function wpcf7_editor_box_mail( $post, $args = '' ) {
 			sprintf( '%s.subject', $args['name'] ) ); ?>
 		<input type="text" id="<?php echo $id; ?>-subject" name="<?php echo $id; ?>-subject" class="large-text code" size="70" value="<?php echo esc_attr( $mail['subject'] ); ?>"<?php if ( $do_validate && $config_error ) { echo ' aria-invalid="true"'; } ?> />
 		<?php if ( $do_validate && $config_error ) {
-			echo sprintf( '<br /><span role="alert" class="config-error dashicons-before dashicons-warning"> %s</span>', $config_error );
+			echo sprintf( '<br /><span role="alert" class="config-error">%s</span>', $config_error );
 		} ?>
 	</td>
 	</tr>
@@ -150,7 +150,7 @@ function wpcf7_editor_box_mail( $post, $args = '' ) {
 			sprintf( '%s.additional_headers', $args['name'] ) ); ?>
 		<textarea id="<?php echo $id; ?>-additional-headers" name="<?php echo $id; ?>-additional-headers" cols="100" rows="4" class="large-text code"<?php if ( $do_validate && $config_error ) { echo ' aria-invalid="true"'; } ?>><?php echo esc_textarea( $mail['additional_headers'] ); ?></textarea>
 		<?php if ( $do_validate && $config_error ) {
-			echo sprintf( '<br /><span role="alert" class="config-error dashicons-before dashicons-warning"> %s</span>', $config_error );
+			echo sprintf( '<br /><span role="alert" class="config-error">%s</span>', $config_error );
 		} ?>
 	</td>
 	</tr>
@@ -164,7 +164,7 @@ function wpcf7_editor_box_mail( $post, $args = '' ) {
 			sprintf( '%s.body', $args['name'] ) ); ?>
 		<textarea id="<?php echo $id; ?>-body" name="<?php echo $id; ?>-body" cols="100" rows="18" class="large-text code"<?php if ( $do_validate && $config_error ) { echo ' aria-invalid="true"'; } ?>><?php echo esc_textarea( $mail['body'] ); ?></textarea>
 		<?php if ( $do_validate && $config_error ) {
-			echo sprintf( '<br /><span role="alert" class="config-error dashicons-before dashicons-warning"> %s</span>', $config_error );
+			echo sprintf( '<br /><span role="alert" class="config-error">%s</span>', $config_error );
 		} ?>
 
 		<p><label for="<?php echo $id; ?>-exclude-blank"><input type="checkbox" id="<?php echo $id; ?>-exclude-blank" name="<?php echo $id; ?>-exclude-blank" value="1"<?php echo ( ! empty( $mail['exclude_blank'] ) ) ? ' checked="checked"' : ''; ?> /> <?php echo esc_html( __( 'Exclude lines with blank mail-tags from output', 'contact-form-7' ) ); ?></label></p>
@@ -215,7 +215,7 @@ function wpcf7_editor_panel_messages( $post ) {
 <input type="text" id="<?php echo $field_name; ?>" name="<?php echo $field_name; ?>" class="large-text" size="70" value="<?php echo esc_attr( $post->message( $key, false ) ); ?>"<?php echo $config_error ? ' aria-invalid="true"' : ''; ?> />
 <?php
 	if ( $config_error ) {
-		echo sprintf( '<br /><span role="alert" class="config-error dashicons-before dashicons-warning"> %s</span>', $config_error );
+		echo sprintf( '<br /><span role="alert" class="config-error">%s</span>', $config_error );
 	}
 ?>
 </label>

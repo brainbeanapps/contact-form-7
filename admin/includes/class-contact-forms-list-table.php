@@ -118,7 +118,7 @@ class WPCF7_Contact_Form_List_Table extends WP_List_Table {
 					count( $config_errors ), 'contact-form-7' ),
 				number_format_i18n( count( $config_errors ) ) );
 			$output .= sprintf(
-				'<div class="config-error dashicons-before dashicons-warning"> %s</div>',
+				'<div class="config-error">%s</div>',
 				$error_notice );
 		}
 
