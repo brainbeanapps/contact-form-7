@@ -576,3 +576,31 @@ function wpcf7_notice_config_errors() {
 		echo sprintf( '<div class="notice notice-error is-dismissible"><p>%s &raquo; %s</p></div>', esc_html( $message ), $link );
 	}
 }
+
+add_action( 'admin_notices', 'wpcf7_notice_bulk_validate_config' );
+
+function wpcf7_notice_bulk_validate_config() {
+	if ( ! wpcf7_validate_configuration()
+	|| ! current_user_can( 'wpcf7_edit_contact_forms' ) ) {
+		return;
+	}
+
+	if ( isset( $_GET['page'] ) && 'wpcf7' == $_GET['page']
+	&& isset( $_GET['action'] ) && 'validate' == $_GET['action'] ) {
+		return;
+	}
+
+	if ( WPCF7::get_option( 'bulk_validate' ) ) { // already done.
+		return;
+	}
+
+	$link = add_query_arg(
+		array( 'action' => 'validate' ),
+		menu_page_url( 'wpcf7', false ) );
+
+	$link = sprintf( '<a href="%s">%s</a>', $link, esc_html( __( 'Validate Contact Form 7 Configuration', 'contact-form-7' ) ) );
+
+	$message = __( "Misconfiguration leads to mail delivery failure or other troubles. Validate your contact forms now.", 'contact-form-7' );
+
+	echo sprintf( '<div class="notice notice-warning is-dismissible"><p>%s &raquo; %s</p></div>', esc_html( $message ), $link );
+}
