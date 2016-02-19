@@ -110,6 +110,7 @@ class WPCF7_Contact_Form_List_Table extends WP_List_Table {
 		$output = sprintf( '<strong>%s</strong>', $output );
 
 		if ( wpcf7_validate_configuration()
+		&& current_user_can( 'wpcf7_edit_contact_form', $item->id() )
 		&& $config_errors = $item->get_config_errors() ) {
 			$error_notice = sprintf(
 				_n(

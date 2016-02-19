@@ -158,6 +158,10 @@ function wpcf7_load_contact_form_admin() {
 		if ( 'POST' == $_SERVER['REQUEST_METHOD'] ) {
 			check_admin_referer( 'wpcf7-bulk-validate' );
 
+			if ( ! current_user_can( 'wpcf7_edit_contact_forms' ) ) {
+				wp_die( __( "You are not allowed to validate configuration.", 'contact-form-7' ) );
+			}
+
 			$contact_forms = WPCF7_ContactForm::find();
 			$result = array(
 				'timestamp' => current_time( 'timestamp' ),
@@ -263,7 +267,8 @@ function wpcf7_admin_management_page() {
 	}
 
 	if ( 'validate' == wpcf7_current_action()
-	&& wpcf7_validate_configuration() ) {
+	&& wpcf7_validate_configuration()
+	&& current_user_can( 'wpcf7_edit_contact_forms' ) ) {
 		wpcf7_admin_bulk_validate_page();
 		return;
 	}
@@ -551,8 +556,12 @@ function wpcf7_notice_config_errors() {
 		return;
 	}
 
-	if ( wpcf7_validate_configuration()
-	&& $config_errors = $contact_form->get_config_errors() ) {
+	if ( ! wpcf7_validate_configuration()
+	|| ! current_user_can( 'wpcf7_edit_contact_form', $contact_form->id() ) ) {
+		return;
+	}
+
+	if ( $config_errors = $contact_form->get_config_errors() ) {
 		$message = sprintf(
 			_n(
 				"This contact form has a configuration error.",
