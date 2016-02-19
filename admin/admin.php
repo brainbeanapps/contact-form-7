@@ -154,6 +154,38 @@ function wpcf7_load_contact_form_admin() {
 		exit();
 	}
 
+	if ( 'validate' == $action ) {
+		if ( 'POST' == $_SERVER['REQUEST_METHOD'] ) {
+			check_admin_referer( 'wpcf7-bulk-validate' );
+
+			$contact_forms = WPCF7_ContactForm::find();
+			$result = array(
+				'timestamp' => current_time( 'timestamp' ),
+				'version' => WPCF7_VERSION,
+				'count_valid' => 0,
+				'count_invalid' => 0 );
+
+			foreach ( $contact_forms as $contact_form ) {
+				$contact_form->validate_configuration();
+
+				if ( $contact_form->get_config_errors() ) {
+					$result['count_invalid'] += 1;
+				} else {
+					$result['count_valid'] += 1;
+				}
+			}
+
+			WPCF7::update_option( 'bulk_validate', $result );
+
+			$query = array(
+				'message' => 'validated' );
+
+			$redirect_to = add_query_arg( $query, menu_page_url( 'wpcf7', false ) );
+			wp_safe_redirect( $redirect_to );
+			exit();
+		}
+	}
+
 	$_GET['post'] = isset( $_GET['post'] ) ? $_GET['post'] : '';
 
 	$post = null;
@@ -230,6 +262,11 @@ function wpcf7_admin_management_page() {
 		return;
 	}
 
+	if ( 'validate' == wpcf7_current_action() ) {
+		wpcf7_admin_bulk_validate_page();
+		return;
+	}
+
 	$list_table = new WPCF7_Contact_Form_List_Table();
 	$list_table->prepare_items();
 
@@ -256,6 +293,32 @@ function wpcf7_admin_management_page() {
 	<input type="hidden" name="page" value="<?php echo esc_attr( $_REQUEST['page'] ); ?>" />
 	<?php $list_table->search_box( __( 'Search Contact Forms', 'contact-form-7' ), 'wpcf7-contact' ); ?>
 	<?php $list_table->display(); ?>
+</form>
+
+</div>
+<?php
+}
+
+function wpcf7_admin_bulk_validate_page() {
+	$contact_forms = WPCF7_ContactForm::find();
+	$count = WPCF7_ContactForm::count();
+
+	$submit_text = sprintf(
+		_n(
+			"Validate %s Contact Form Now",
+			"Validate %s Contact Forms Now",
+			$count, 'contact-form-7' ),
+		number_format_i18n( $count ) );
+
+?>
+<div class="wrap">
+
+<h1><?php echo esc_html( __( 'Validate Configuration', 'contact-form-7' ) ); ?></h1>
+
+<form method="post" action="">
+	<input type="hidden" name="action" value="validate" />
+	<?php wp_nonce_field( 'wpcf7-bulk-validate' ); ?>
+	<p><input type="submit" class="button" value="<?php echo esc_attr( $submit_text ); ?>" /></p>
 </form>
 
 </div>
@@ -323,11 +386,26 @@ function wpcf7_admin_updated_message() {
 	}
 
 	if ( 'created' == $_REQUEST['message'] ) {
-		$updated_message = __( 'Contact form created.', 'contact-form-7' );
+		$updated_message = __( "Contact form created.", 'contact-form-7' );
 	} elseif ( 'saved' == $_REQUEST['message'] ) {
-		$updated_message = __( 'Contact form saved.', 'contact-form-7' );
+		$updated_message = __( "Contact form saved.", 'contact-form-7' );
 	} elseif ( 'deleted' == $_REQUEST['message'] ) {
-		$updated_message = __( 'Contact form deleted.', 'contact-form-7' );
+		$updated_message = __( "Contact form deleted.", 'contact-form-7' );
+	} elseif ( 'validated' == $_REQUEST['message'] ) {
+		$bulk_validate = WPCF7::get_option( 'bulk_validate', array() );
+		$count_invalid = isset( $bulk_validate['count_invalid'] )
+			? absint( $bulk_validate['count_invalid'] ) : 0;
+
+		if ( $count_invalid ) {
+			$updated_message = sprintf(
+				_n(
+					"Configuration validation completed. An invalid contact form was found.",
+					"Configuration validation completed. %s invalid contact forms were found.",
+					$count_invalid, 'contact-form-7' ),
+				number_format_i18n( $count_invalid ) );
+		} else {
+			$updated_message = __( "Configuration validation completed. No invalid contact form was found.", 'contact-form-7' );
+		}
 	}
 
 	if ( ! empty( $updated_message ) ) {
