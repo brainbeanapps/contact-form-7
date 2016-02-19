@@ -569,8 +569,10 @@ function wpcf7_notice_config_errors() {
 				count( $config_errors ), 'contact-form-7' ),
 			number_format_i18n( count( $config_errors ) ) );
 
-		echo sprintf(
-			'<div class="notice notice-error is-dismissible"><p>%s</p></div>',
-			esc_html( $message ) );
+		$link = wpcf7_link(
+			__( 'http://contactform7.com/configuration-errors/', 'contact-form-7' ),
+			__( 'How to Resolve Configuration Errors', 'contact-form-7' ) );
+
+		echo sprintf( '<div class="notice notice-error is-dismissible"><p>%s &raquo; %s</p></div>', esc_html( $message ), $link );
 	}
 }
