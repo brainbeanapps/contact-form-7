@@ -154,7 +154,7 @@ function wpcf7_load_contact_form_admin() {
 		exit();
 	}
 
-	if ( 'validate' == $action ) {
+	if ( 'validate' == $action && wpcf7_validate_configuration() ) {
 		if ( 'POST' == $_SERVER['REQUEST_METHOD'] ) {
 			check_admin_referer( 'wpcf7-bulk-validate' );
 
@@ -262,7 +262,8 @@ function wpcf7_admin_management_page() {
 		return;
 	}
 
-	if ( 'validate' == wpcf7_current_action() ) {
+	if ( 'validate' == wpcf7_current_action()
+	&& wpcf7_validate_configuration() ) {
 		wpcf7_admin_bulk_validate_page();
 		return;
 	}
