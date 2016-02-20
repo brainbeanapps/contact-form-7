@@ -79,6 +79,10 @@ class WPCF7_ConfigValidator {
 			return;
 		}
 
+		if ( 'mail' != $template && empty( $components['active'] ) ) {
+			return;
+		}
+
 		$components = wp_parse_args( $components, array(
 			'subject' => '',
 			'sender' => '',
