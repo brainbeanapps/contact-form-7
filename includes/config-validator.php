@@ -168,8 +168,8 @@ class WPCF7_ConfigValidator {
 
 		$site_domain = strtolower( $_SERVER['SERVER_NAME'] );
 
-		if ( substr( $site_domain, 0, 4 ) == 'www.' ) {
-			$site_domain = substr( $site_domain, 4 );
+		if ( preg_match( '/^[0-9.]+$/', $site_domain ) ) { // 123.456.789.012
+			return true;
 		}
 
 		$content = trim( $content );
@@ -180,7 +180,19 @@ class WPCF7_ConfigValidator {
 			$email = strtolower( $content );
 		}
 
-		return ( substr( $email, - strlen( $site_domain ) ) == $site_domain );
+		$email_domain = substr( $email, strrpos( $email, '@' ) + 1 );
+
+		$site_domain_parts = explode( '.', $site_domain );
+
+		do {
+			if ( implode( '.', $site_domain_parts ) == $email_domain ) {
+				return true;
+			}
+
+			array_shift( $site_domain_parts );
+		} while ( $site_domain_parts );
+
+		return false;
 	}
 
 	public function test_to_field_syntax( $content ) {
