@@ -238,6 +238,11 @@ class WPCF7_ConfigValidator {
 			return;
 		}
 
+		if ( isset( $messages['captcha_not_match'] )
+		&& ! wpcf7_use_really_simple_captcha() ) {
+			unset( $messages['captcha_not_match'] );
+		}
+
 		foreach ( $messages as $key => $message ) {
 			$stripped = wp_strip_all_tags( $message );
 
