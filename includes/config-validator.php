@@ -258,7 +258,7 @@ class WPCF7_ConfigValidator {
 					$last_item = array_pop( $form_tag->values );
 				}
 
-				if ( $last_item && wpcf7_is_email( $last_item ) ) {
+				if ( $last_item && wpcf7_is_mailbox_list( $last_item ) ) {
 					return $example_email;
 				} else {
 					return $example_text;
