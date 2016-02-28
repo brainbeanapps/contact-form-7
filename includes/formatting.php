@@ -200,6 +200,8 @@ function wpcf7_is_mailbox_list( $mailbox_list ) {
 		$mailbox_list = explode( ',', (string) $mailbox_list );
 	}
 
+	$addresses = array();
+
 	foreach ( $mailbox_list as $mailbox ) {
 		if ( ! is_string( $mailbox ) ) {
 			return false;
@@ -216,9 +218,48 @@ function wpcf7_is_mailbox_list( $mailbox_list ) {
 		if ( ! wpcf7_is_email( $addr_spec ) ) {
 			return false;
 		}
+
+		$addresses[] = $addr_spec;
+	}
+
+	return $addresses;
+}
+
+function wpcf7_is_email_in_domain( $email, $domain ) {
+	$email_list = wpcf7_is_mailbox_list( $email );
+
+	foreach ( $email_list as $email ) {
+		$email_domain = substr( $email, strrpos( $email, '@' ) + 1 );
+		$domain_parts = explode( '.', $domain );
+
+		do {
+			$site_domain = implode( '.', $domain_parts );
+
+			if ( $site_domain == $email_domain ) {
+				continue 2;
+			}
+
+			array_shift( $domain_parts );
+		} while ( $domain_parts );
+
+		return false;
 	}
 
 	return true;
+}
+
+function wpcf7_is_email_in_site_domain( $email ) {
+	if ( wpcf7_is_localhost() ) {
+		return true;
+	}
+
+	$site_domain = strtolower( $_SERVER['SERVER_NAME'] );
+
+	if ( preg_match( '/^[0-9.]+$/', $site_domain ) ) { // 123.456.789.012
+		return true;
+	}
+
+	return wpcf7_is_email_in_domain( $email, $site_domain );
 }
 
 function wpcf7_antiscript_file_name( $filename ) {

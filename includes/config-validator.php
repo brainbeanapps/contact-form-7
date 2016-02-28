@@ -112,7 +112,7 @@ class WPCF7_ConfigValidator {
 		if ( ! wpcf7_is_mailbox_list( $sender ) ) {
 			$this->add_error( sprintf( '%s.sender', $template ),
 				self::error_invalid_syntax );
-		} elseif ( ! $this->test_email_in_site_domain( $sender ) ) {
+		} elseif ( ! wpcf7_is_email_in_site_domain( $sender ) ) {
 			$this->add_error( sprintf( '%s.sender', $template ),
 				self::error_email_not_in_site_domain );
 		}
@@ -147,40 +147,6 @@ class WPCF7_ConfigValidator {
 			$this->add_error( sprintf( '%s.body', $template ),
 				self::error_maybe_empty );
 		}
-	}
-
-	public function test_email_in_site_domain( $content ) {
-		if ( wpcf7_is_localhost() ) {
-			return true;
-		}
-
-		$site_domain = strtolower( $_SERVER['SERVER_NAME'] );
-
-		if ( preg_match( '/^[0-9.]+$/', $site_domain ) ) { // 123.456.789.012
-			return true;
-		}
-
-		$content = trim( $content );
-
-		if ( preg_match( '/<(.+)>$/', $content, $matches ) ) {
-			$email = strtolower( $matches[1] );
-		} else {
-			$email = strtolower( $content );
-		}
-
-		$email_domain = substr( $email, strrpos( $email, '@' ) + 1 );
-
-		$site_domain_parts = explode( '.', $site_domain );
-
-		do {
-			if ( implode( '.', $site_domain_parts ) == $email_domain ) {
-				return true;
-			}
-
-			array_shift( $site_domain_parts );
-		} while ( $site_domain_parts );
-
-		return false;
 	}
 
 	public function test_additional_headers_syntax( $content ) {
