@@ -159,7 +159,15 @@ class WPCF7_ConfigValidator {
 				continue;
 			}
 
-			if ( ! preg_match( '/^[0-9A-Za-z-]+:.+$/', $header ) ) {
+			if ( ! preg_match( '/^([0-9A-Za-z-]+):(.+)$/', $header, $matches ) ) {
+				return false;
+			}
+
+			$is_mailbox_list_field = in_array( strtolower( $matches[1] ),
+				array( 'reply-to', 'cc', 'bcc' ) );
+
+			if ( $is_mailbox_list_field
+			&& ! wpcf7_is_mailbox_list( $matches[2] ) ) {
 				return false;
 			}
 		}
