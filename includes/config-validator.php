@@ -109,7 +109,7 @@ class WPCF7_ConfigValidator {
 		$sender = $sender->replace_tags();
 		$sender = wpcf7_strip_newline( $sender );
 
-		if ( ! $this->test_from_field_syntax( $sender ) ) {
+		if ( ! wpcf7_is_mailbox_list( $sender ) ) {
 			$this->add_error( sprintf( '%s.sender', $template ),
 				self::error_invalid_syntax );
 		} elseif ( ! $this->test_email_in_site_domain( $sender ) ) {
@@ -123,7 +123,7 @@ class WPCF7_ConfigValidator {
 		$recipient = $recipient->replace_tags();
 		$recipient = wpcf7_strip_newline( $recipient );
 
-		if ( ! $this->test_to_field_syntax( $recipient ) ) {
+		if ( ! wpcf7_is_mailbox_list( $recipient ) ) {
 			$this->add_error( sprintf( '%s.recipient', $template ),
 				self::error_invalid_syntax );
 		}
@@ -147,18 +147,6 @@ class WPCF7_ConfigValidator {
 			$this->add_error( sprintf( '%s.body', $template ),
 				self::error_maybe_empty );
 		}
-	}
-
-	public function test_from_field_syntax( $content ) {
-		$content = trim( $content );
-
-		if ( preg_match( '/<(.+)>$/', $content, $matches ) ) {
-			$email = $matches[1];
-		} else {
-			$email = $content;
-		}
-
-		return wpcf7_is_email( $email );
 	}
 
 	public function test_email_in_site_domain( $content ) {
@@ -193,24 +181,6 @@ class WPCF7_ConfigValidator {
 		} while ( $site_domain_parts );
 
 		return false;
-	}
-
-	public function test_to_field_syntax( $content ) {
-		$tos = explode( ',', $content );
-
-		foreach ( $tos as $to ) {
-			$to = trim( $to );
-
-			if ( preg_match( '/<(.+)>$/', $to, $matches ) ) {
-				$to = $matches[1];
-			}
-
-			if ( ! wpcf7_is_email( $to ) ) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	public function test_additional_headers_syntax( $content ) {

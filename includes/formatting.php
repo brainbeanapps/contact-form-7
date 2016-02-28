@@ -195,6 +195,32 @@ function wpcf7_is_date( $date ) {
 	return apply_filters( 'wpcf7_is_date', $result, $date );
 }
 
+function wpcf7_is_mailbox_list( $mailbox_list ) {
+	if ( ! is_array( $mailbox_list ) ) {
+		$mailbox_list = explode( ',', (string) $mailbox_list );
+	}
+
+	foreach ( $mailbox_list as $mailbox ) {
+		if ( ! is_string( $mailbox ) ) {
+			return false;
+		}
+
+		$mailbox = trim( $mailbox );
+
+		if ( preg_match( '/<(.+)>$/', $mailbox, $matches ) ) {
+			$addr_spec = $matches[1];
+		} else {
+			$addr_spec = $mailbox;
+		}
+
+		if ( ! wpcf7_is_email( $addr_spec ) ) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 function wpcf7_antiscript_file_name( $filename ) {
 	$filename = basename( $filename );
 	$parts = explode( '.', $filename );
