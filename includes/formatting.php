@@ -259,7 +259,20 @@ function wpcf7_is_email_in_site_domain( $email ) {
 		return true;
 	}
 
-	return wpcf7_is_email_in_domain( $email, $site_domain );
+	if ( wpcf7_is_email_in_domain( $email, $site_domain ) ) {
+		return true;
+	}
+
+	if ( preg_match( '%^https?://([^/]+)%', home_url(), $matches ) ) {
+		$site_domain = strtolower( $matches[1] );
+
+		if ( $site_domain != strtolower( $_SERVER['SERVER_NAME'] )
+		&& wpcf7_is_email_in_domain( $email, $site_domain ) ) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 function wpcf7_antiscript_file_name( $filename ) {
