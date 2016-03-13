@@ -327,6 +327,8 @@ function wpcf7_admin_bulk_validate_page() {
 	<p><input type="submit" class="button" value="<?php echo esc_attr( $submit_text ); ?>" /></p>
 </form>
 
+<?php echo wpcf7_link( __( 'http://contactform7.com/configuration-validator-faq/', 'contact-form-7' ), __( 'FAQ about Configuration Validator', 'contact-form-7' ) ); ?>
+
 </div>
 <?php
 }
