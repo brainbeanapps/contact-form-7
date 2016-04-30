@@ -227,9 +227,11 @@ function wpcf7_is_mailbox_list( $mailbox_list ) {
 
 function wpcf7_is_email_in_domain( $email, $domain ) {
 	$email_list = wpcf7_is_mailbox_list( $email );
+	$domain = strtolower( $domain );
 
 	foreach ( $email_list as $email ) {
 		$email_domain = substr( $email, strrpos( $email, '@' ) + 1 );
+		$email_domain = strtolower( $email_domain );
 		$domain_parts = explode( '.', $domain );
 
 		do {
