@@ -263,7 +263,18 @@ function wpcf7_is_email_in_site_domain( $email ) {
 		return true;
 	}
 
-	if ( preg_match( '%^https?://([^/]+)%', home_url(), $matches ) ) {
+	$home_url = home_url();
+
+	// for interoperability with WordPress MU Domain Mapping plugin
+	if ( is_multisite() && function_exists( 'domain_mapping_siteurl' ) ) {
+		$domain_mapping_siteurl = domain_mapping_siteurl( false );
+
+		if ( $domain_mapping_siteurl ) {
+			$home_url = $domain_mapping_siteurl;
+		}
+	}
+
+	if ( preg_match( '%^https?://([^/]+)%', $home_url, $matches ) ) {
 		$site_domain = strtolower( $matches[1] );
 
 		if ( $site_domain != strtolower( $_SERVER['SERVER_NAME'] )
