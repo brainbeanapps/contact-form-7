@@ -61,6 +61,12 @@
 					if (this.defaultChecked != $(this).is(':checked')) {
 						changed = true;
 					}
+				} else if ($(this).is('select')) {
+					$(this).find('option').each(function() {
+						if (this.defaultSelected != $(this).is(':selected')) {
+							changed = true;
+						}
+					});
 				} else {
 					if (this.defaultValue != $(this).val()) {
 						changed = true;
