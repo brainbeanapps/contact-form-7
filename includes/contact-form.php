@@ -834,6 +834,18 @@ class WPCF7_ContactForm {
 		return array();
 	}
 
+	public function get_config_error_messages() {
+		if ( ! $this->initial() ) {
+			if ( ! $this->config_validator ) {
+				$this->config_validator = new WPCF7_ConfigValidator( $this );
+			}
+
+			return $this->config_validator->get_error_messages();
+		}
+
+		return array();
+	}
+
 	public function config_error( $section ) {
 		if ( ! $this->initial() ) {
 			if ( ! $this->config_validator ) {

@@ -53,6 +53,19 @@
 			window.getSelection().addRange(range);
 		});
 
+		$('[data-config-field]').each(function() {
+			var section = $(this).attr('data-config-field');
+
+			if (_wpcf7.configErrors[section]) {
+				var $config_error = $('<span></span>').attr({
+					'role': 'alert',
+					'class': 'config-error'
+				}).text(_wpcf7.configErrors[section]);
+				$(this).after($config_error).after('<br />');
+				$(this).attr({'aria-invalid': 'true'});
+			}
+		});
+
 		$(window).on('beforeunload', function(event) {
 			var changed = false;
 

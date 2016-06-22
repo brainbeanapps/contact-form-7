@@ -33,6 +33,16 @@ class WPCF7_ConfigValidator {
 		return null;
 	}
 
+	public function get_error_messages() {
+		$error_messages = array();
+
+		foreach ( array_keys( $this->errors ) as $section ) {
+			$error_messages[$section] = $this->get_error_message( $section );
+		}
+
+		return $error_messages;
+	}
+
 	public function get_error_message( $section ) {
 		$code = $this->get_error( $section );
 
