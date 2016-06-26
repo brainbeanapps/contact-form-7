@@ -49,7 +49,7 @@ function wpcf7_editor_panel_form( $post ) {
 	$tag_generator->print_buttons();
 ?>
 
-<textarea id="wpcf7-form" name="wpcf7-form" cols="100" rows="24" class="large-text code"><?php echo esc_textarea( $post->prop( 'form' ) ); ?></textarea>
+<textarea id="wpcf7-form" name="wpcf7-form" cols="100" rows="24" class="large-text code" data-config-field="form.body"><?php echo esc_textarea( $post->prop( 'form' ) ); ?></textarea>
 <?php
 }
 
