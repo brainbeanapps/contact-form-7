@@ -151,7 +151,7 @@ function wpcf7_editor_box_mail( $post, $args = '' ) {
 		<label for="<?php echo $id; ?>-attachments"><?php echo esc_html( __( 'File Attachments', 'contact-form-7' ) ); ?></label>
 	</th>
 	<td>
-		<textarea id="<?php echo $id; ?>-attachments" name="<?php echo $id; ?>-attachments" cols="100" rows="4" class="large-text code"><?php echo esc_textarea( $mail['attachments'] ); ?></textarea>
+		<textarea id="<?php echo $id; ?>-attachments" name="<?php echo $id; ?>-attachments" cols="100" rows="4" class="large-text code" data-config-field="<?php echo sprintf( '%s.attachments', esc_attr( $args['name'] ) ); ?>"><?php echo esc_textarea( $mail['attachments'] ); ?></textarea>
 	</td>
 	</tr>
 </tbody>
@@ -202,7 +202,7 @@ function wpcf7_editor_panel_additional_settings( $post ) {
 <h2><?php echo esc_html( __( 'Additional Settings', 'contact-form-7' ) ); ?></h2>
 <fieldset>
 <legend><?php echo $description; ?></legend>
-<textarea id="wpcf7-additional-settings" name="wpcf7-additional-settings" cols="100" rows="8" class="large-text"><?php echo esc_textarea( $post->prop( 'additional_settings' ) ); ?></textarea>
+<textarea id="wpcf7-additional-settings" name="wpcf7-additional-settings" cols="100" rows="8" class="large-text" data-config-field="additional_settings.body"><?php echo esc_textarea( $post->prop( 'additional_settings' ) ); ?></textarea>
 </fieldset>
 <?php
 }
