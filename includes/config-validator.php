@@ -24,8 +24,7 @@ class WPCF7_ConfigValidator {
 
 			if ( ! is_array( $errors ) ) { // for back-compat
 				$code = $errors;
-				$error = array( 'code' => $code, 'message' => '', 'args' => array() );
-				$this->errors[$section] = array( $error );
+				$this->add_error( $section, $code );
 			} else {
 				$this->errors[$section] = $errors;
 			}
@@ -89,19 +88,16 @@ class WPCF7_ConfigValidator {
 		}
 	}
 
-	private function add_error( $section, $code, $message = '', $args = '' ) {
-		$args = wp_parse_args( $args, array() );
+	public function add_error( $section, $code, $args = '' ) {
+		$args = wp_parse_args( $args, array(
+			'message' => '',
+			'params' => array() ) );
 
 		if ( ! isset( $this->errors[$section] ) ) {
 			$this->errors[$section] = array();
 		}
 
-		$error = array(
-			'code' => $code,
-			'message' => $message,
-			'args' => $args );
-
-		$this->errors[$section][] = $error;
+		$this->errors[$section][] = array( 'code' => $code, 'args' => $args );
 	}
 
 	public function validate() {
