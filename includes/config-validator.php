@@ -13,17 +13,37 @@ class WPCF7_ConfigValidator {
 
 	public function __construct( WPCF7_ContactForm $contact_form ) {
 		$this->contact_form = $contact_form;
-		$this->errors = (array) get_post_meta(
-			$this->contact_form->id(), '_config_errors', true );
-		$this->errors = array_filter( $this->errors );
+
+		$config_errors = get_post_meta( $contact_form->id(),
+			'_config_errors', true );
+
+		foreach ( (array) $config_errors as $section => $errors ) {
+			if ( empty( $errors ) ) {
+				continue;
+			}
+
+			if ( ! is_array( $errors ) ) { // for back-compat
+				$code = $errors;
+				$error = array( 'code' => $code, 'message' => '', 'args' => array() );
+				$this->errors[$section] = array( $error );
+			} else {
+				$this->errors[$section] = $errors;
+			}
+		}
 	}
 
 	public function is_valid() {
-		return ! $this->errors;
+		return ! $this->count_errors();
 	}
 
-	public function get_errors() {
-		return $this->errors;
+	public function count_errors() {
+		$count = 0;
+
+		foreach( $this->errors as $errors ) {
+			$count += count( array_filter( $errors ) );
+		}
+
+		return $count;
 	}
 
 	public function get_error( $section ) {
@@ -45,7 +65,13 @@ class WPCF7_ConfigValidator {
 	}
 
 	public function get_error_message( $section ) {
-		$code = $this->get_error( $section );
+		$errors = $this->get_error( $section );
+
+		if ( empty( $errors ) ) {
+			return '';
+		}
+
+		$code = $errors[0]['code'];
 
 		switch ( $code ) {
 			case self::error_maybe_empty:
@@ -63,8 +89,19 @@ class WPCF7_ConfigValidator {
 		}
 	}
 
-	private function add_error( $section, $error ) {
-		$this->errors[$section] = $error;
+	private function add_error( $section, $code, $message = '', $args = '' ) {
+		$args = wp_parse_args( $args, array() );
+
+		if ( ! isset( $this->errors[$section] ) ) {
+			$this->errors[$section] = array();
+		}
+
+		$error = array(
+			'code' => $code,
+			'message' => $message,
+			'args' => $args );
+
+		$this->errors[$section][] = $error;
 	}
 
 	public function validate() {

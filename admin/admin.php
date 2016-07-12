@@ -170,12 +170,13 @@ function wpcf7_load_contact_form_admin() {
 				'count_invalid' => 0 );
 
 			foreach ( $contact_forms as $contact_form ) {
-				$contact_form->validate_configuration();
+				$config_validator = new WPCF7_ConfigValidator( $contact_form );
+				$config_validator->validate();
 
-				if ( $contact_form->get_config_errors() ) {
-					$result['count_invalid'] += 1;
-				} else {
+				if ( $config_validator->is_valid() ) {
 					$result['count_valid'] += 1;
+				} else {
+					$result['count_invalid'] += 1;
 				}
 			}
 
@@ -257,8 +258,9 @@ function wpcf7_admin_enqueue_scripts( $hook_suffix ) {
 	if ( ( $post = wpcf7_get_current_contact_form() )
 	&& current_user_can( 'wpcf7_edit_contact_form', $post->id() )
 	&& wpcf7_validate_configuration() ) {
+		$config_validator = new WPCF7_ConfigValidator( $post );
 		$args['configErrors'] = array_map( 'esc_html',
-			$post->get_config_error_messages() );
+			$config_validator->get_error_messages() );
 	}
 
 	wp_localize_script( 'wpcf7-admin', '_wpcf7', $args );
@@ -585,13 +587,15 @@ function wpcf7_notice_config_errors() {
 		return;
 	}
 
-	if ( $config_errors = $contact_form->get_config_errors() ) {
+	$config_validator = new WPCF7_ConfigValidator( $contact_form );
+
+	if ( $count_errors = $config_validator->count_errors() ) {
 		$message = sprintf(
 			_n(
 				"This contact form has a configuration error.",
 				"This contact form has %s configuration errors.",
-				count( $config_errors ), 'contact-form-7' ),
-			number_format_i18n( count( $config_errors ) ) );
+				$count_errors, 'contact-form-7' ),
+			number_format_i18n( $count_errors ) );
 
 		$link = wpcf7_link(
 			__( 'http://contactform7.com/configuration-errors/', 'contact-form-7' ),
