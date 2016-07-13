@@ -259,8 +259,11 @@ function wpcf7_admin_enqueue_scripts( $hook_suffix ) {
 	&& current_user_can( 'wpcf7_edit_contact_form', $post->id() )
 	&& wpcf7_validate_configuration() ) {
 		$config_validator = new WPCF7_ConfigValidator( $post );
-		$args['configErrors'] = array_map( 'esc_html',
-			$config_validator->get_error_messages() );
+		$error_messages = $config_validator->collect_error_messages();
+
+		foreach ( $error_messages as $section => $messages ) {
+			$args['configErrors'][$section] = array_map( 'esc_html', $messages );
+		}
 	}
 
 	wp_localize_script( 'wpcf7-admin', '_wpcf7', $args );

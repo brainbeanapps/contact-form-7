@@ -45,33 +45,54 @@ class WPCF7_ConfigValidator {
 		return $count;
 	}
 
-	public function get_error( $section ) {
-		if ( isset( $this->errors[$section] ) ) {
-			return $this->errors[$section];
-		}
-
-		return null;
-	}
-
-	public function get_error_messages() {
+	public function collect_error_messages() {
 		$error_messages = array();
 
 		foreach ( array_keys( $this->errors ) as $section ) {
-			$error_messages[$section] = $this->get_error_message( $section );
+			$error_messages[$section] = $this->get_error_messages( $section );
 		}
 
 		return $error_messages;
 	}
 
-	public function get_error_message( $section ) {
-		$errors = $this->get_error( $section );
+	public function get_error_messages( $section ) {
+		$messages = array();
 
-		if ( empty( $errors ) ) {
-			return '';
+		if ( empty( $this->errors[$section] ) ) {
+			return $messages;
 		}
 
-		$code = $errors[0]['code'];
+		foreach ( (array) $this->errors[$section] as $error ) {
+			if ( empty( $error['args']['message'] ) ) {
+				$messages[] = $this->get_default_message( $error['code'] );
+				continue;
+			} elseif ( empty( $error['args']['params'] ) ) {
+				$messages[] = $error['args']['message'];
+				continue;
+			} else {
+				$message = $error['args']['message'];
+				$params = $error['args']['params'];
 
+				foreach ( (array) $params as $key => $val ) {
+					if ( ! preg_match( '/^[0-9A-Za-z_]+$/', $key ) ) { // invalid key
+						continue;
+					}
+
+					$placeholder = '%' . $key . '%';
+
+					if ( false !== stripos( $message, $placeholder ) ) {
+						$message = str_ireplace( $placeholder, $val, $message );
+					}
+				}
+
+				$messages[] = $message;
+			}
+		}
+
+		return $messages;
+	}
+
+	public function get_default_message( $code ) {
 		switch ( $code ) {
 			case self::error_maybe_empty:
 				return __( "This field can be empty depending on user input.", 'contact-form-7' );
