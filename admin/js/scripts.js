@@ -57,12 +57,16 @@
 			var section = $(this).attr('data-config-field');
 
 			if (_wpcf7.configErrors[section]) {
-				var $config_error = $('<span></span>').attr({
+				var $list = $('<ul></ul>').attr({
 					'role': 'alert',
 					'class': 'config-error'
-				}).text(_wpcf7.configErrors[section]);
-				$(this).after($config_error).after('<br />');
-				$(this).attr({'aria-invalid': 'true'});
+				});
+
+				$.each(_wpcf7.configErrors[section], function(i, val) {
+					$('<li></li>').text(val).appendTo($list);
+				});
+
+				$(this).after($list).attr({'aria-invalid': 'true'});
 			}
 		});
 

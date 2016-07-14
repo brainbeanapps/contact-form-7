@@ -56,10 +56,18 @@ span.shortcode > input {
 	color: #23282d;
 }
 
-div.config-error, span.config-error {
+div.config-error, span.config-error, ul.config-error {
 	color: #d00;
 	font-style: normal;
 	font-size: 13px;
+}
+
+ul.config-error {
+	margin: 0;
+}
+
+ul.config-error li {
+	padding: 0 4px;
 }
 
 /*
