@@ -2,6 +2,7 @@
 
 class WPCF7_ConfigValidator {
 
+	const error = 100;
 	const error_maybe_empty = 101;
 	const error_invalid_syntax = 102;
 	const error_email_not_in_site_domain = 103;
@@ -146,6 +147,8 @@ class WPCF7_ConfigValidator {
 		$this->validate_mail( 'mail' );
 		$this->validate_mail( 'mail_2' );
 		$this->validate_messages();
+
+		do_action( 'wpcf7_config_validator_validate', $this );
 
 		$this->save();
 		return $this->is_valid();
