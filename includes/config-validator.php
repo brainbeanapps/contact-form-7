@@ -6,7 +6,7 @@ class WPCF7_ConfigValidator {
 	const error_invalid_syntax = 102;
 	const error_email_not_in_site_domain = 103;
 	const error_html_in_message = 104;
-	const error_dont_place_cbs_in_label = 105;
+	const error_multiple_controls_in_label = 105;
 
 	private $contact_form;
 	private $errors = array();
@@ -102,8 +102,8 @@ class WPCF7_ConfigValidator {
 				return __( "This email address does not belong to the same domain as the site.", 'contact-form-7' );
 			case self::error_html_in_message:
 				return __( "HTML tags are not allowed in a message.", 'contact-form-7' );
-			case self::error_dont_place_cbs_in_label:
-				return __( "One or more checkboxes or radio buttons is placed inside a label element.", 'contact-form-7' );
+			case self::error_multiple_controls_in_label:
+				return __( "Multiple form controls are placed inside a single label element.", 'contact-form-7' );
 			default:
 				return '';
 		}
@@ -147,17 +147,29 @@ class WPCF7_ConfigValidator {
 		$pattern = '%<label(?:[ \t\n]+.*?)?>(.+?)</label>%s';
 
 		if ( preg_match_all( $pattern, $body, $matches ) ) {
-			$checkbox_types = array( 'checkbox', 'checkbox*', 'radio' );
 			$manager = WPCF7_ShortcodeManager::get_instance();
 
 			foreach ( $matches[1] as $insidelabel ) {
 				$tags = $manager->scan_shortcode( $insidelabel );
+				$fields_count = 0;
 
 				foreach ( $tags as $tag ) {
-					if ( in_array( $tag['type'], $checkbox_types ) ) {
+					$tag = new WPCF7_Shortcode( $tag );
+
+					if ( in_array( $tag->basetype, array( 'checkbox', 'radio' ) ) ) {
+						$fields_count += count( $tag->values );
+
+						if ( $tag->has_option( 'free_text' ) ) {
+							$fields_count += 1;
+						}
+					} elseif ( ! empty( $tag->name ) ) {
+						$fields_count += 1;
+					}
+
+					if ( 1 < $fields_count ) {
 						$this->add_error( 'form.body',
-							self::error_dont_place_cbs_in_label );
-						break 2;
+							self::error_multiple_controls_in_label );
+						return;
 					}
 				}
 			}
