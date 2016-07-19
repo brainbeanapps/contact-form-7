@@ -26,7 +26,13 @@ class WPCF7_ConfigValidator {
 				$code = $errors;
 				$this->add_error( $section, $code );
 			} else {
-				$this->errors[$section] = $errors;
+				foreach ( (array) $errors as $error ) {
+					if ( ! empty( $error['code'] ) ) {
+						$code = $error['code'];
+						$args = isset( $error['args'] ) ? $error['args'] : '';
+						$this->add_error( $section, $code, $args );
+					}
+				}
 			}
 		}
 	}
