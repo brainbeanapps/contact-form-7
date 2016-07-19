@@ -21,16 +21,16 @@ class WPCF7_ContactFormTemplate {
 	public static function form() {
 		$template = sprintf(
 			'
-<label>%2$s %1$s
+<label> %2$s %1$s
     [text* your-name] </label>
 
-<label>%3$s %1$s
+<label> %3$s %1$s
     [email* your-email] </label>
 
-<label>%4$s
+<label> %4$s
     [text your-subject] </label>
 
-<label>%5$s
+<label> %5$s
     [textarea your-message] </label>
 
 [submit "%6$s"]',
