@@ -127,6 +127,18 @@ class WPCF7_ConfigValidator {
 		$this->errors[$section][] = array( 'code' => $code, 'args' => $args );
 	}
 
+	public function remove_error( $section, $code ) {
+		if ( empty( $this->errors[$section] ) ) {
+			return;
+		}
+
+		foreach ( (array) $this->errors[$section] as $key => $error ) {
+			if ( isset( $error['code'] ) && $error['code'] == $code ) {
+				unset( $this->errors[$section][$key] );
+			}
+		}
+	}
+
 	public function validate() {
 		$this->errors = array();
 
