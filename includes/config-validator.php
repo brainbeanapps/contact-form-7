@@ -38,6 +38,10 @@ class WPCF7_ConfigValidator {
 		}
 	}
 
+	public function contact_form() {
+		return $this->contact_form;
+	}
+
 	public function is_valid() {
 		return ! $this->count_errors();
 	}
