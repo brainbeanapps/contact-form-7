@@ -129,15 +129,17 @@ class WPCF7_ConfigValidator {
 		$this->validate_mail( 'mail_2' );
 		$this->validate_messages();
 
+		$this->save();
+		return $this->is_valid();
+	}
+
+	public function save() {
 		delete_post_meta( $this->contact_form->id(), '_config_errors' );
 
 		if ( $this->errors ) {
 			update_post_meta( $this->contact_form->id(), '_config_errors',
 				$this->errors );
-			return false;
 		}
-
-		return true;
 	}
 
 	public function validate_form() {
