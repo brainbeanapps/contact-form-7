@@ -61,7 +61,7 @@
 				tag_type += '*';
 			}
 
-			components = _wpcf7.taggen.compose(tag_type, $form);
+			var components = _wpcf7.taggen.compose(tag_type, $form);
 			$(this).val(components);
 		});
 
