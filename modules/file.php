@@ -362,7 +362,7 @@ function wpcf7_upload_tmp_dir() {
 
 add_action( 'template_redirect', 'wpcf7_cleanup_upload_files', 20 );
 
-function wpcf7_cleanup_upload_files() {
+function wpcf7_cleanup_upload_files( $seconds = 60, $max = 100 ) {
 	if ( is_admin() || 'GET' != $_SERVER['REQUEST_METHOD']
 	|| is_robots() || is_feed() || is_trackback() ) {
 		return;
@@ -374,6 +374,10 @@ function wpcf7_cleanup_upload_files() {
 		return;
 	}
 
+	$seconds = absint( $seconds );
+	$max = absint( $max );
+	$count = 0;
+
 	if ( $handle = @opendir( $dir ) ) {
 		while ( false !== ( $file = readdir( $handle ) ) ) {
 			if ( $file == "." || $file == ".." || $file == ".htaccess" ) {
@@ -382,11 +386,16 @@ function wpcf7_cleanup_upload_files() {
 
 			$mtime = @filemtime( $dir . $file );
 
-			if ( $mtime && time() < $mtime + 60 ) { // less than 60 secs old
+			if ( $mtime && time() < $mtime + $seconds ) { // less than $seconds old
 				continue;
 			}
 
 			wpcf7_rmdir_p( path_join( $dir, $file ) );
+			$count += 1;
+
+			if ( $max <= $count ) {
+				break;
+			}
 		}
 
 		closedir( $handle );
