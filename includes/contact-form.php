@@ -335,6 +335,10 @@ class WPCF7_ContactForm {
 			$atts['name'] = $name_attr;
 		}
 
+		$atts['data-upload-file-type-invalid'] = wpcf7_get_message( 'upload_file_type_invalid' );
+		$atts['data-upload-file-too-large'] = wpcf7_get_message( 'upload_file_too_large' );
+		$atts['data-upload-totallimit'] = wpcf7_get_post_max_size();
+
 		$atts = wpcf7_format_atts( $atts );
 
 		$html .= sprintf( '<form %s>', $atts ) . "\n";
@@ -980,4 +984,15 @@ function wpcf7_contact_form_tag_func( $atts, $content = null, $code = '' ) {
 	}
 
 	return $contact_form->form_html( $atts );
+}
+
+function wpcf7_get_post_max_size() {
+	$post_max_size = ini_get( 'post_max_size' );
+	switch (substr ($post_max_size, -1))
+	{
+		case 'M': case 'm': return (int)$post_max_size * 1048576;
+		case 'K': case 'k': return (int)$post_max_size * 1024;
+		case 'G': case 'g': return (int)$post_max_size * 1073741824;
+		default: return $post_max_size;
+	}
 }
