@@ -43,6 +43,47 @@ function wpcf7_file_shortcode_handler( $tag ) {
 	$atts['type'] = 'file';
 	$atts['name'] = $tag->name;
 
+	$allowed_file_types = array();
+	if ( $file_types_a = $tag->get_option( 'filetypes' ) ) {
+		foreach ( $file_types_a as $file_types ) {
+			$file_types = explode( '|', $file_types );
+
+			foreach ( $file_types as $file_type ) {
+				$file_type = trim( $file_type, '.' );
+				$file_type = str_replace( array( '.', '+', '*', '?' ), array( '\.', '\+', '\*', '\?' ), $file_type );
+				$allowed_file_types[] = $file_type;
+			}
+		}
+	}
+	$allowed_file_types = array_unique( $allowed_file_types );
+	$file_type_pattern = implode( '|', $allowed_file_types );
+	if ( '' == $file_type_pattern )
+		$file_type_pattern = 'jpg|jpeg|png|gif|pdf|doc|docx|ppt|pptx|odt|avi|ogg|m4a|mov|mp3|mp4|mpg|wav|wmv';
+	$atts['data-filetypes'] = $file_type_pattern;
+
+	$allowed_size = 1048576; // default size 1 MB
+	if ( $file_size_a = $tag->get_option( 'limit' ) ) {
+		$limit_pattern = '/^([1-9][0-9]*)([kKmM]?[bB])?$/';
+
+		foreach ( $file_size_a as $file_size ) {
+			if ( preg_match( $limit_pattern, $file_size, $matches ) ) {
+				$allowed_size = (int) $matches[1];
+
+				if ( ! empty( $matches[2] ) ) {
+					$kbmb = strtolower( $matches[2] );
+
+					if ( 'kb' == $kbmb )
+						$allowed_size *= 1024;
+					elseif ( 'mb' == $kbmb )
+						$allowed_size *= 1024 * 1024;
+				}
+
+				break;
+			}
+		}
+	}
+	$atts['data-limit'] = $allowed_size;
+
 	$atts = wpcf7_format_atts( $atts );
 
 	$html = sprintf(

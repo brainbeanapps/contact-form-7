@@ -13,7 +13,7 @@
 			beforeSubmit: function(arr, $form, options) {
 				$form.wpcf7ClearResponseOutput();
 				$form.find('[aria-invalid]').attr('aria-invalid', 'false');
-				$form.find('img.ajax-loader').css({ visibility: 'visible' });
+				$form.find('.wpcf7-submit').addClass("is-progress");
 				return true;
 			},
 			beforeSerialize: function($form, options) {
@@ -126,6 +126,14 @@
 		} else if (1 == data.mailSent) {
 			$responseOutput.addClass('wpcf7-mail-sent-ok');
 			$form.addClass('sent');
+			$('[data-popup="brief"]').removeClass("is-active");
+			$('.js-contact-us[data-state="default"]').hide();
+			$('.js-contact-us[data-state="success"]').show();
+
+			setTimeout(function() {
+				$('.js-contact-us[data-state="success"]').hide();
+				$('.js-contact-us[data-state="default"]').show();
+			}, 5000)
 
 			if (data.onSentOk) {
 				$.each(data.onSentOk, function(i, n) { eval(n) });
@@ -198,7 +206,7 @@
 			var loader = $('<img class="ajax-loader" />')
 				.attr({ src: _wpcf7.loaderUrl, alt: _wpcf7.sending })
 				.css('visibility', 'hidden');
-
+			$('.wpcf7-submit').removeClass("is-progress");
 			$(this).after(loader);
 		});
 	};
@@ -391,6 +399,7 @@
 			$(this).find('div.wpcf7-response-output').hide().empty().removeClass('wpcf7-mail-sent-ok wpcf7-mail-sent-ng wpcf7-validation-errors wpcf7-spam-blocked').removeAttr('role');
 			$(this).find('span.wpcf7-not-valid-tip').remove();
 			$(this).find('img.ajax-loader').css({ visibility: 'hidden' });
+			$(this).find('.wpcf7-submit').removeClass("is-progress");
 		});
 	};
 
