@@ -122,16 +122,16 @@ function wpcf7_checkbox_shortcode_handler( $tag ) {
 
 		if ( $label_first ) { // put label first, input last
 			$item = sprintf(
-				'<span class="wpcf7-list-item-label">%1$s</span>&nbsp;<input %2$s />',
+				'<span class="wpcf7-list-item-label">%1$s</span><input %2$s />',
 				esc_html( $label ), $item_atts );
 		} else {
 			$item = sprintf(
-				'<input %2$s />&nbsp;<span class="wpcf7-list-item-label">%1$s</span>',
+				'<input %2$s /><span class="wpcf7-list-item-label">%1$s</span>',
 				esc_html( $label ), $item_atts );
 		}
 
 		if ( $use_label_element )
-			$item = '<label>' . $item . '</label>';
+			$item = '<label class="'.$tag->basetype.'">' . $item . '</label>';
 
 		if ( false !== $tabindex )
 			$tabindex += 1;
